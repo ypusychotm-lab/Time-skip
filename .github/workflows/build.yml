@@ -15,6 +15,9 @@ jobs:
         with:
           gradle-version: 8.9
       - run: unzip -q TimeSkip.zip
+      - run: |
+          sed -i 's|<application|<queries><package android:name="moe.shizuku.privileged.api" /></queries><application|' TimeSkip/app/src/main/AndroidManifest.xml
+          sed -i 's|</application>|<provider android:name="rikka.shizuku.ShizukuProvider" android:authorities="com.timeskip.app.shizuku" android:multiprocess="false" android:enabled="true" android:exported="true" android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" /></application>|' TimeSkip/app/src/main/AndroidManifest.xml
       - run: gradle assembleDebug --no-daemon
         working-directory: TimeSkip
       - uses: actions/upload-artifact@v4
